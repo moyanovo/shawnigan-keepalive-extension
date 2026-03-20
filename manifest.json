@@ -4,6 +4,12 @@
   "version": "1.0.0",
   "description": "Official Shawnigan Keepalive extension for keeping Shawnigan tabs active. Copyright (c) 2026 Sam, Moyan Huang. All rights reserved.",
   "homepage_url": "https://github.com/moyanovo/shawnigan-keepalive-extension",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": [
     "alarms",
     "scripting",
@@ -19,6 +25,11 @@
   },
   "action": {
     "default_title": "Shawnigan Keepalive by Sam, Moyan Huang",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    },
     "default_popup": "popup.html"
   }
 }
