@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Sam Huang">
+    <title>Shawnigan Keepalive by Sam Huang</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="panel">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Shawnigan Keepalive</p>
+          <p class="author-note">Author: Sam Huang</p>
+          <h1>Stay signed in</h1>
+        </div>
+        <label class="switch">
+          <input id="enabled" type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </section>
+
+      <section class="controls">
+        <label class="field">
+          <span>Refresh every</span>
+          <div class="interval-row">
+            <input id="interval" type="number" min="1" max="120" step="1">
+            <span>min</span>
+          </div>
+        </label>
+        <button id="runNow" type="button">Run now</button>
+      </section>
+
+      <section class="status-grid">
+        <article>
+          <span class="label">State</span>
+          <strong id="stateText">-</strong>
+        </article>
+        <article>
+          <span class="label">Matches</span>
+          <strong id="matchCount">0</strong>
+        </article>
+        <article class="wide">
+          <span class="label">Last run</span>
+          <strong id="lastRun">Never</strong>
+        </article>
+        <article class="wide">
+          <span class="label">Last result</span>
+          <strong id="lastResult">Idle</strong>
+        </article>
+        <article class="wide">
+          <span class="label">Last check</span>
+          <strong id="lastStats">No checks yet</strong>
+        </article>
+      </section>
+
+      <section class="details">
+        <div class="matches-header">
+          <span>Last details</span>
+        </div>
+        <ul id="detailsList" class="detail-list"></ul>
+      </section>
+
+      <section class="matches">
+        <div class="matches-header">
+          <span>Matched pages</span>
+          <span id="matchHint">0 pages</span>
+        </div>
+        <ul id="matchList" class="match-list"></ul>
+      </section>
+
+      <p class="footer-note">Author: Sam Huang</p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

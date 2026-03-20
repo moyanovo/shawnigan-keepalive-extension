@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Shawnigan Keepalive by Sam, Moyan Huang",
+  "version": "1.0.0",
+  "description": "Official Shawnigan Keepalive extension for keeping Shawnigan tabs active. Copyright (c) 2026 Sam, Moyan Huang. All rights reserved.",
+  "homepage_url": "https://github.com/huangmoyan/shawnigan-keepalive-extension",
+  "permissions": [
+    "alarms",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://shawnigan.myschoolapp.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Shawnigan Keepalive by Sam, Moyan Huang",
+    "default_popup": "popup.html"
+  }
+}
