@@ -3,7 +3,7 @@
   "name": "Shawnigan Keepalive by Sam, Moyan Huang",
   "version": "1.0.0",
   "description": "Official Shawnigan Keepalive extension for keeping Shawnigan tabs active. Copyright (c) 2026 Sam, Moyan Huang. All rights reserved.",
-  "homepage_url": "https://github.com/huangmoyan/shawnigan-keepalive-extension",
+  "homepage_url": "https://github.com/moyanovo/shawnigan-keepalive-extension",
   "permissions": [
     "alarms",
     "scripting",
