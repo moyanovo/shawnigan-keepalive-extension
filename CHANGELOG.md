@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-03-27
+
+### Added
+
+- Per-tab popup actions to jump directly to a matched Shawnigan tab or run a keepalive check for one selected tab.
+- Shared helper coverage for normalization, tab ordering, badge state, and detail rendering logic.
+
+### Changed
+
+- Reworked keepalive execution to serialize overlapping runs, limit concurrent tab pings, and preserve cleaner last-run state.
+- Upgraded badge behavior to reflect running, paused, healthy, and attention-needed states instead of only showing matched counts.
+- Expanded popup accessibility with keyboard-focusable controls, live status announcements, disabled/loading states, and richer per-tab health badges.
+- Introduced a shared helper module for settings normalization, badge rendering, and tab status annotations.
+
 ## [1.0.0] - 2026-03-20
 
 ### Added

@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
-    <main class="panel">
+    <main class="panel" aria-busy="false">
+      <p id="screenReaderStatus" class="sr-only" aria-live="polite" aria-atomic="true"></p>
       <section class="hero">
         <div>
           <p class="eyebrow">Shawnigan Keepalive</p>
@@ -16,7 +17,7 @@
           <h1>Stay signed in</h1>
         </div>
         <label class="switch">
-          <input id="enabled" type="checkbox">
+          <input id="enabled" class="switch-input" type="checkbox" aria-label="Enable or disable keepalive">
           <span class="slider"></span>
         </label>
       </section>

@@ -19,8 +19,10 @@ clear status feedback in the popup.
 - On/off toggle for the keepalive worker
 - Adjustable refresh interval from 1 to 120 minutes
 - Manual `Run now` action for immediate checks
+- Per-tab `Run tab` and `Jump to tab` actions from the popup
 - Live matched-tab list and badge count
-- Last-run diagnostics with failure details
+- State-aware badge behavior for running, paused, and attention-needed states
+- Last-run diagnostics with failure details and per-tab outcomes
 - Lightweight background behavior optimized to reduce unnecessary work
 
 ## Supported Match
@@ -60,8 +62,10 @@ Once loaded, pin the extension if you want quick access to the popup.
 2. Click the extension icon to open the popup.
 3. Turn keepalive on.
 4. Set your preferred refresh interval.
-5. Use `Run now` any time you want an immediate check.
-6. Review `Last result`, `Last check`, and `Last details` for diagnostics.
+5. Use `Run now` any time you want an immediate check across all matching tabs.
+6. Use `Run tab` when you want to test a single matched page without waiting for the next scheduled run.
+7. Use `Jump to tab` to switch straight to a matched Shawnigan page from the popup.
+8. Review `Last result`, `Last check`, and `Last details` for diagnostics.
 
 ## Permissions
 
@@ -76,10 +80,12 @@ The extension requests only the permissions it needs:
 
 - `manifest.json`: Chrome extension manifest
 - `background.js`: background service worker and keepalive logic
+- `lib/keepalive-core.mjs`: shared normalization and status helpers
 - `popup.html`: popup markup
 - `popup.css`: popup styling
 - `popup.js`: popup UI behavior
 - `icons/`: extension icon assets
+- `tests/`: lightweight logic coverage for shared helpers
 
 ## Development Notes
 
