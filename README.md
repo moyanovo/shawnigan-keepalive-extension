@@ -7,6 +7,8 @@ Author: Sam, Moyan Huang
 
 Repository: [moyanovo/shawnigan-keepalive-extension](https://github.com/moyanovo/shawnigan-keepalive-extension)
 
+Current stable release: [`v1.1.0`](https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.1.0)
+
 ## Overview
 
 Shawnigan Keepalive is a Manifest V3 Chrome extension designed to help keep
@@ -31,16 +33,16 @@ clear status feedback in the popup.
 
 ## Installation
 
-You can install the extension locally from a downloaded copy of this
-repository.
+You can install the extension from the latest packaged release or from a local
+source checkout. Historical versions remain available on the Releases page.
 
-### Option 1: Download ZIP from GitHub
+### Option 1: Download the current release package (Recommended)
 
-1. Open the repository page.
-2. Click `Code` > `Download ZIP`.
+1. Open the [Releases page](https://github.com/moyanovo/shawnigan-keepalive-extension/releases).
+2. Download `shawnigan-keepalive-extension-v1.1.0.zip` from the latest release.
 3. Extract the ZIP to any folder on your computer.
 
-### Option 2: Clone the repository
+### Option 2: Clone the source repository
 
 ```bash
 git clone https://github.com/moyanovo/shawnigan-keepalive-extension.git
@@ -100,6 +102,11 @@ The extension requests only the permissions it needs:
 - [CONTRIBUTING.md](CONTRIBUTING.md): contribution guidance
 - [LICENSE](LICENSE): licensing terms
 - [NOTICE](NOTICE): author and attribution notice
+
+## Releases
+
+- Latest release: [`v1.1.0`](https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.1.0)
+- Historical releases: [all releases](https://github.com/moyanovo/shawnigan-keepalive-extension/releases)
 
 ## Copyright
 
