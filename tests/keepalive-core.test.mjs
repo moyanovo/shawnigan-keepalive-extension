@@ -5,6 +5,7 @@ import {
   annotateTabsWithLastStatus,
   buildLastDetails,
   getBadgePresentation,
+  isLikelyAuthenticationUrl,
   mapWithConcurrency,
   normalizeSettings,
   prioritizeTabsForPing,
@@ -29,6 +30,14 @@ test('normalizeSettings keeps only supported fields and validates running trigge
   assert.equal(settings.lastState, 'warning')
   assert.deepEqual(settings.lastDetails, ['one', 'two', 'three', 'four'])
   assert.equal('extraField' in settings, false)
+})
+
+
+test('isLikelyAuthenticationUrl flags redirected sign-in destinations', () => {
+  assert.equal(isLikelyAuthenticationUrl('https://shawnigan.myschoolapp.com/app#login'), true)
+  assert.equal(isLikelyAuthenticationUrl('https://signin.blackbaud.com/oauth2/authorize'), true)
+  assert.equal(isLikelyAuthenticationUrl('https://shawnigan.myschoolapp.com/app/student'), false)
+  assert.equal(isLikelyAuthenticationUrl('https://shawnigan.myschoolapp.com/'), false)
 })
 
 test('buildLastDetails summarizes only the first failures and keeps the target URL', () => {

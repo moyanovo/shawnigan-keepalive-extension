@@ -10,6 +10,8 @@ const matchList = document.getElementById('matchList')
 const matchHint = document.getElementById('matchHint')
 const runNowButton = document.getElementById('runNow')
 const screenReaderStatus = document.getElementById('screenReaderStatus')
+const heroStatusBadge = document.getElementById('heroStatusBadge')
+const heroSummary = document.getElementById('heroSummary')
 const panel = document.querySelector('.panel')
 
 let lastStatus = null
@@ -233,6 +235,25 @@ function getStateLabel(status) {
   return 'On'
 }
 
+function getHeroStatusLabel(status) {
+  if (status.isRunning) return 'Running'
+  if (!status.enabled) return 'Paused'
+  if (!status.matchedCount) return 'No tabs'
+  if (status.lastState === 'warning' || status.lastState === 'error') return 'Attention'
+  return 'Live'
+}
+
+function getHeroSummary(status) {
+  if (status.isRunning) return formatLastStats(status)
+  if (!status.enabled) return 'Keepalive is paused'
+  if (!status.matchedCount) return 'Open a Shawnigan page to start watching'
+
+  const pageText = `${status.matchedCount} page${status.matchedCount === 1 ? '' : 's'} matched`
+  if (!status.lastRunAt) return `${pageText} · ready to check`
+  if (status.lastState === 'healthy') return `${pageText} · healthy`
+  return `${pageText} · ${status.lastResult || 'ready'}`
+}
+
 function buildStatusAnnouncement(status) {
   const parts = [
     `Keepalive ${status.enabled ? 'on' : 'off'}.`,
@@ -257,6 +278,8 @@ function renderStatus(status, options = {}) {
   lastStatus = status
   enabledInput.checked = status.enabled
   intervalInput.value = status.intervalMinutes
+  heroStatusBadge.textContent = getHeroStatusLabel(status)
+  heroSummary.textContent = getHeroSummary(status)
   stateText.textContent = getStateLabel(status)
   matchCount.textContent = String(status.matchedCount)
   lastRun.textContent = formatDate(status.lastRunAt)

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026-04-30
+
+### Added
+
+- Compact dark utility popup design with a live hero status badge and clearer matched-page summary.
+- Helper coverage for detecting sign-in and authentication redirect URLs during keepalive checks.
+
+### Changed
+
+- Reworked popup visual hierarchy, spacing, cards, controls, and matched-page list styling for a cleaner dashboard feel.
+- Updated the popup hero copy to summarize live, paused, running, empty, and attention-needed states.
+- Treat keepalive responses that resolve to sign-in or authentication URLs as attention-needed instead of successful checks.
+
 ## [1.1.0] - 2026-03-27
 
 ### Added

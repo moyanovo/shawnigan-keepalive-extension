@@ -1,4 +1,5 @@
 import {
+  AUTHENTICATION_URL_MARKERS,
   SAFE_KEEPALIVE_URL,
   DEFAULT_SETTINGS,
   annotateTabsWithLastStatus,
@@ -196,11 +197,26 @@ async function pingTab(tab) {
   try {
     const [{ result: response }] = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      args: [SAFE_KEEPALIVE_PATH, KEEPALIVE_TIMEOUT_MS],
-      func: async (keepalivePath, timeoutMs) => {
+      args: [SAFE_KEEPALIVE_PATH, KEEPALIVE_TIMEOUT_MS, AUTHENTICATION_URL_MARKERS],
+      func: async (keepalivePath, timeoutMs, authenticationUrlMarkers) => {
         const url = new URL(keepalivePath, window.location.origin)
         const controller = new AbortController()
         const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs)
+
+        const isLikelyAuthenticationUrl = (value) => {
+          if (typeof value !== 'string' || !value) return false
+
+          let normalizedValue = value.toLowerCase()
+
+          try {
+            const parsedUrl = new URL(value)
+            normalizedValue = `${parsedUrl.hostname}${parsedUrl.pathname}${parsedUrl.search}${parsedUrl.hash}`.toLowerCase()
+          } catch {
+            normalizedValue = value.toLowerCase()
+          }
+
+          return authenticationUrlMarkers.some((marker) => normalizedValue.includes(marker))
+        }
 
         try {
           const response = await fetch(url.toString(), {
@@ -214,11 +230,14 @@ async function pingTab(tab) {
               pragma: 'no-cache',
             },
           })
+          const finalUrl = response.url || url.toString()
+          const redirectedToAuthentication = isLikelyAuthenticationUrl(finalUrl)
 
           return {
-            ok: response.ok,
+            ok: response.ok && !redirectedToAuthentication,
             status: response.status,
-            url: url.toString(),
+            error: redirectedToAuthentication ? 'Redirected to sign-in page' : null,
+            url: finalUrl,
             title: document.title,
           }
         } catch (error) {
