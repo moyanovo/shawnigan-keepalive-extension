@@ -5,9 +5,11 @@ import {
   annotateTabsWithLastStatus,
   buildLastDetails,
   getBadgePresentation,
+  getSmartIntervalMinutes,
   isLikelyAuthenticationUrl,
   mapWithConcurrency,
   normalizeSettings,
+  normalizeUserStatusSnapshot,
   prioritizeTabsForPing,
 } from '../lib/keepalive-core.mjs'
 
@@ -113,4 +115,48 @@ test('annotateTabsWithLastStatus and badge presentation reflect health state', (
 
   assert.equal(badge.text, '!')
   assert.match(badge.title, /needs attention/i)
+})
+
+
+test('normalizeUserStatusSnapshot keeps only safe session timing fields', () => {
+  const snapshot = normalizeUserStatusSnapshot({
+    TokenValid: true,
+    MinutesSinceActive: '7',
+    AuthUsingBbid: true,
+    CurrentVersion: '2026.04.27.6',
+    UnreadMessageCount: 99,
+    PersonalField: 'do not keep',
+  })
+
+  assert.deepEqual(snapshot, {
+    tokenValid: true,
+    minutesSinceActive: 7,
+    authUsingBbid: true,
+    currentVersion: '2026.04.27.6',
+  })
+})
+
+test('getSmartIntervalMinutes tightens checks as the session approaches timeout', () => {
+  assert.equal(getSmartIntervalMinutes([
+    { userStatus: { tokenValid: true, minutesSinceActive: 2 } },
+  ], 15), 3)
+
+  assert.equal(getSmartIntervalMinutes([
+    { userStatus: { tokenValid: true, minutesSinceActive: 7 } },
+  ], 15), 3)
+
+  assert.equal(getSmartIntervalMinutes([
+    { userStatus: { tokenValid: true, minutesSinceActive: 9 } },
+  ], 15), 1)
+
+  assert.equal(getSmartIntervalMinutes([
+    { userStatus: { tokenValid: true, minutesSinceActive: 4 } },
+    { userStatus: { tokenValid: true, minutesSinceActive: 8 } },
+  ], 15), 2)
+})
+
+test('getSmartIntervalMinutes falls back when readonly session status is unavailable', () => {
+  assert.equal(getSmartIntervalMinutes([], 15), 15)
+  assert.equal(getSmartIntervalMinutes([{ ok: true }], 12), 12)
+  assert.equal(getSmartIntervalMinutes([{ userStatus: { tokenValid: false } }], 15), 1)
 })

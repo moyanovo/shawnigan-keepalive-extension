@@ -1,5 +1,6 @@
 const enabledInput = document.getElementById('enabled')
 const intervalInput = document.getElementById('interval')
+const smartIntervalInput = document.getElementById('smartInterval')
 const stateText = document.getElementById('stateText')
 const matchCount = document.getElementById('matchCount')
 const lastRun = document.getElementById('lastRun')
@@ -56,6 +57,7 @@ function updateUiState() {
 
   enabledInput.disabled = controlsLocked
   intervalInput.disabled = controlsLocked
+  smartIntervalInput.disabled = controlsLocked
 
   runNowButton.disabled = controlsLocked || extensionRunning || !lastStatus?.enabled
   runNowButton.textContent = controlsLocked && busyLabel
@@ -92,6 +94,22 @@ function describeTabState(tab) {
   return { label: 'Matched tab', state: 'matched' }
 }
 
+function formatUserStatus(userStatus) {
+  if (!userStatus || typeof userStatus !== 'object') return null
+
+  const parts = []
+
+  if (typeof userStatus.minutesSinceActive === 'number') {
+    parts.push(`idle ${Math.round(userStatus.minutesSinceActive)} min`)
+  }
+
+  if (typeof userStatus.tokenValid === 'boolean') {
+    parts.push(userStatus.tokenValid ? 'token valid' : 'token invalid')
+  }
+
+  return parts.length ? parts.join(' · ') : null
+}
+
 function renderMatches(tabs) {
   matchList.innerHTML = ''
   matchHint.textContent = `${tabs.length} page${tabs.length === 1 ? '' : 's'}`
@@ -122,7 +140,13 @@ function renderMatches(tabs) {
 
     const meta = document.createElement('span')
     meta.className = 'tab-card__meta'
-    meta.textContent = `tab ${tab.id} · window ${tab.windowId}${tab.lastCheckTrigger ? ` · ${formatTrigger(tab.lastCheckTrigger)}` : ''}`
+    const userStatus = formatUserStatus(tab.userStatus)
+    meta.textContent = [
+      `tab ${tab.id}`,
+      `window ${tab.windowId}`,
+      tab.lastCheckTrigger ? formatTrigger(tab.lastCheckTrigger) : null,
+      userStatus,
+    ].filter(Boolean).join(' · ')
 
     const badge = document.createElement('span')
     badge.className = 'tab-card__badge'
@@ -203,8 +227,12 @@ function formatLastStats(status) {
     return `${success} ok · ${failure} failed · selected tab${trigger}`
   }
 
-  if (!matched) return `0 tabs checked${trigger}`
-  return `${success} ok · ${failure} failed · ${matched} checked${trigger}`
+  const smartText = status.smartIntervalEnabled && status.lastSmartIntervalMinutes
+    ? ` · next ${status.lastSmartIntervalMinutes} min`
+    : ''
+
+  if (!matched) return `0 tabs checked${trigger}${smartText}`
+  return `${success} ok · ${failure} failed · ${matched} checked${trigger}${smartText}`
 }
 
 function renderDetails(details) {
@@ -278,6 +306,7 @@ function renderStatus(status, options = {}) {
   lastStatus = status
   enabledInput.checked = status.enabled
   intervalInput.value = status.intervalMinutes
+  smartIntervalInput.checked = Boolean(status.smartIntervalEnabled)
   heroStatusBadge.textContent = getHeroStatusLabel(status)
   heroSummary.textContent = getHeroSummary(status)
   stateText.textContent = getStateLabel(status)
@@ -384,6 +413,16 @@ intervalInput.addEventListener('change', async () => {
   try {
     const status = await withBusy('Saving interval...', () =>
       request('save-settings', { intervalMinutes: intervalInput.value }))
+    renderStatus(status, { announceStatus: true })
+  } catch (error) {
+    renderError(error)
+  }
+})
+
+smartIntervalInput.addEventListener('change', async () => {
+  try {
+    const status = await withBusy('Saving mode...', () =>
+      request('save-settings', { smartIntervalEnabled: smartIntervalInput.checked }))
     renderStatus(status, { announceStatus: true })
   } catch (error) {
     renderError(error)

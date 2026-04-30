@@ -221,7 +221,7 @@ button:focus-visible {
 
 .controls {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 1fr auto;
   gap: 10px;
   align-items: end;
   margin-top: 0;
@@ -252,6 +252,27 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.smart-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted-strong);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.smart-row input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
 }
 
 input[type="number"] {

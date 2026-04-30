@@ -7,7 +7,7 @@ Author: Sam, Moyan Huang
 
 Repository: [moyanovo/shawnigan-keepalive-extension](https://github.com/moyanovo/shawnigan-keepalive-extension)
 
-Current stable release: [`v1.2.0`](https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.2.0)
+Current stable release: [`v1.3.0`](https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.0)
 
 ## Overview
 
@@ -39,7 +39,7 @@ source checkout. Historical versions remain available on the Releases page.
 ### Option 1: Download the current release package (Recommended)
 
 1. Open the [Releases page](https://github.com/moyanovo/shawnigan-keepalive-extension/releases).
-2. Download `shawnigan-keepalive-extension-v1.2.0.zip` from the latest release.
+2. Download `shawnigan-keepalive-extension-v1.3.0.zip` from the latest release.
 3. Extract the ZIP to any folder on your computer.
 
 ### Option 2: Clone the source repository
@@ -105,7 +105,7 @@ The extension requests only the permissions it needs:
 
 ## Releases
 
-- Latest release: [`v1.2.0`](https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.2.0)
+- Latest release: [`v1.3.0`](https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.0)
 - Historical releases: [all releases](https://github.com/moyanovo/shawnigan-keepalive-extension/releases)
 
 ## Copyright

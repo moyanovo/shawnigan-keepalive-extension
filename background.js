@@ -9,8 +9,10 @@ import {
   combineTriggers,
   formatTrigger,
   getBadgePresentation,
+  getSmartIntervalMinutes,
   mapWithConcurrency,
   normalizeSettings,
+  normalizeUserStatusSnapshot,
   normalizeTrigger,
   prioritizeTabsForPing,
 } from './lib/keepalive-core.mjs'
@@ -18,6 +20,7 @@ import {
 const STORAGE_KEY = 'settings'
 const ALARM_NAME = 'shawnigan-keepalive'
 const SAFE_KEEPALIVE_PATH = '/'
+const USER_STATUS_PATH = '/api/webapp/userstatus/'
 const KEEPALIVE_TIMEOUT_MS = 15000
 const BADGE_REFRESH_DELAY_MS = 250
 const MAX_CONCURRENT_PINGS = 3
@@ -36,7 +39,9 @@ function isMatchingUrl(url = '') {
 }
 
 function haveSchedulingSettingsChanged(current, next) {
-  return current.enabled !== next.enabled || current.intervalMinutes !== next.intervalMinutes
+  return current.enabled !== next.enabled
+    || current.intervalMinutes !== next.intervalMinutes
+    || current.smartIntervalEnabled !== next.smartIntervalEnabled
 }
 
 function getRunState(matchedCount, failureCount) {
@@ -133,18 +138,21 @@ async function syncAlarm(settings) {
     return
   }
 
-  if (existingAlarm?.periodInMinutes === settings.intervalMinutes) {
-    return
-  }
-
   if (existingAlarm) {
     await chrome.alarms.clear(ALARM_NAME)
   }
 
-  chrome.alarms.create(ALARM_NAME, {
-    delayInMinutes: settings.intervalMinutes,
-    periodInMinutes: settings.intervalMinutes,
-  })
+  const delayInMinutes = settings.smartIntervalEnabled
+    ? settings.lastSmartIntervalMinutes
+    : settings.intervalMinutes
+  const normalizedDelay = Math.max(1, Number(delayInMinutes) || settings.intervalMinutes)
+  const alarmOptions = { delayInMinutes: normalizedDelay }
+
+  if (!settings.smartIntervalEnabled) {
+    alarmOptions.periodInMinutes = settings.intervalMinutes
+  }
+
+  chrome.alarms.create(ALARM_NAME, alarmOptions)
 }
 
 async function findMatchingTabs() {
@@ -191,17 +199,18 @@ async function pingTab(tab) {
       error: 'Missing tab id',
       title: tab.title || 'Untitled tab',
       url: SAFE_KEEPALIVE_URL,
+      userStatus: null,
+      userStatusError: null,
     }
   }
 
   try {
     const [{ result: response }] = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      args: [SAFE_KEEPALIVE_PATH, KEEPALIVE_TIMEOUT_MS, AUTHENTICATION_URL_MARKERS],
-      func: async (keepalivePath, timeoutMs, authenticationUrlMarkers) => {
+      args: [SAFE_KEEPALIVE_PATH, USER_STATUS_PATH, KEEPALIVE_TIMEOUT_MS, AUTHENTICATION_URL_MARKERS],
+      func: async (keepalivePath, userStatusPath, timeoutMs, authenticationUrlMarkers) => {
         const url = new URL(keepalivePath, window.location.origin)
-        const controller = new AbortController()
-        const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs)
+        const userStatusUrl = new URL(userStatusPath, window.location.origin)
 
         const isLikelyAuthenticationUrl = (value) => {
           if (typeof value !== 'string' || !value) return false
@@ -218,18 +227,50 @@ async function pingTab(tab) {
           return authenticationUrlMarkers.some((marker) => normalizedValue.includes(marker))
         }
 
+        const fetchWithTimeout = async (targetUrl) => {
+          const controller = new AbortController()
+          const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs)
+
+          try {
+            return await fetch(targetUrl.toString(), {
+              method: 'GET',
+              credentials: 'include',
+              cache: 'no-store',
+              redirect: 'follow',
+              signal: controller.signal,
+              headers: {
+                'cache-control': 'no-cache',
+                pragma: 'no-cache',
+              },
+            })
+          } finally {
+            window.clearTimeout(timeoutId)
+          }
+        }
+
+        let userStatus = null
+        let userStatusError = null
+
         try {
-          const response = await fetch(url.toString(), {
-            method: 'GET',
-            credentials: 'include',
-            cache: 'no-store',
-            redirect: 'follow',
-            signal: controller.signal,
-            headers: {
-              'cache-control': 'no-cache',
-              pragma: 'no-cache',
-            },
-          })
+          const statusResponse = await fetchWithTimeout(userStatusUrl)
+          const statusFinalUrl = statusResponse.url || userStatusUrl.toString()
+          const redirectedToAuthentication = isLikelyAuthenticationUrl(statusFinalUrl)
+
+          if (!statusResponse.ok || redirectedToAuthentication) {
+            userStatusError = redirectedToAuthentication
+              ? 'UserStatus redirected to sign-in page'
+              : `UserStatus HTTP ${statusResponse.status}`
+          } else {
+            userStatus = await statusResponse.json()
+          }
+        } catch (error) {
+          userStatusError = error?.name === 'AbortError'
+            ? 'UserStatus timed out'
+            : (error?.message || 'UserStatus unavailable')
+        }
+
+        try {
+          const response = await fetchWithTimeout(url)
           const finalUrl = response.url || url.toString()
           const redirectedToAuthentication = isLikelyAuthenticationUrl(finalUrl)
 
@@ -239,6 +280,8 @@ async function pingTab(tab) {
             error: redirectedToAuthentication ? 'Redirected to sign-in page' : null,
             url: finalUrl,
             title: document.title,
+            userStatus,
+            userStatusError,
           }
         } catch (error) {
           return {
@@ -249,9 +292,9 @@ async function pingTab(tab) {
               : (error?.message || 'Ping failed'),
             url: url.toString(),
             title: document.title,
+            userStatus,
+            userStatusError,
           }
-        } finally {
-          window.clearTimeout(timeoutId)
         }
       },
     })
@@ -263,6 +306,8 @@ async function pingTab(tab) {
       error: response?.error || null,
       title: response?.title || tab.title || 'Untitled tab',
       url: response?.url || SAFE_KEEPALIVE_URL,
+      userStatus: normalizeUserStatusSnapshot(response?.userStatus),
+      userStatusError: response?.userStatusError || null,
     }
   } catch (error) {
     return {
@@ -272,8 +317,20 @@ async function pingTab(tab) {
       error: error?.message || 'No response',
       title: tab.title || 'Untitled tab',
       url: SAFE_KEEPALIVE_URL,
+      userStatus: null,
+      userStatusError: null,
     }
   }
+}
+
+async function saveCompletedRun(settingsPatch, options = {}) {
+  const savedSettings = await saveSettings(settingsPatch, options)
+
+  if (options.rescheduleAlarm) {
+    await syncAlarm(savedSettings)
+  }
+
+  return savedSettings
 }
 
 async function savePausedState(trigger, scope) {
@@ -383,7 +440,7 @@ async function performKeepalive(trigger = 'manual', options = {}) {
     const matchedTabs = await resolveTabsForRun(scope, options.tabId)
 
     if (!matchedTabs.length) {
-      return saveSettings({
+      return saveCompletedRun({
         isRunning: false,
         currentTrigger: null,
         lastRunAt: new Date().toISOString(),
@@ -403,9 +460,11 @@ async function performKeepalive(trigger = 'manual', options = {}) {
         lastDetails: getNoMatchDetails(scope),
         lastTargetUrl: SAFE_KEEPALIVE_URL,
         lastTabStatuses: [],
+        lastSmartIntervalMinutes: initialSettings.intervalMinutes,
         lastErrorAt: null,
       }, {
         syncAlarm: false,
+        rescheduleAlarm: scope === 'all-tabs',
       })
     }
 
@@ -413,8 +472,11 @@ async function performKeepalive(trigger = 'manual', options = {}) {
     const successCount = pingResults.filter((result) => result.ok).length
     const failureCount = pingResults.length - successCount
     const finishedAt = new Date().toISOString()
+    const smartIntervalMinutes = initialSettings.smartIntervalEnabled
+      ? getSmartIntervalMinutes(pingResults, initialSettings.intervalMinutes)
+      : initialSettings.intervalMinutes
 
-    return saveSettings({
+    return saveCompletedRun({
       isRunning: false,
       currentTrigger: null,
       lastRunAt: finishedAt,
@@ -431,13 +493,18 @@ async function performKeepalive(trigger = 'manual', options = {}) {
         failureCount,
         scope,
       }),
-      lastDetails: buildLastDetails(normalizedTrigger, matchedTabs.length, pingResults),
+      lastDetails: buildLastDetails(normalizedTrigger, matchedTabs.length, pingResults, {
+        smartIntervalEnabled: initialSettings.smartIntervalEnabled,
+        smartIntervalMinutes,
+      }),
       lastTargetUrl: SAFE_KEEPALIVE_URL,
       lastTabStatuses: buildLastTabStatuses(normalizedTrigger, pingResults, finishedAt),
+      lastSmartIntervalMinutes: smartIntervalMinutes,
       lastErrorAt: null,
     }, {
       syncAlarm: false,
       badgeCount: matchedTabs.length,
+      rescheduleAlarm: scope === 'all-tabs',
     })
   } catch (error) {
     return recordExtensionError('Keepalive check failed.', error, {

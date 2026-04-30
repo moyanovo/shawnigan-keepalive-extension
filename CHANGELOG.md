@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2026-04-30
+
+### Added
+
+- Smart keepalive mode that reads Shawnigan's user status endpoint before each check and adapts the next interval based on real session idle timing.
+- Popup controls and diagnostics for smart mode, including the last status read and next calculated check interval.
+- Test coverage for safe user-status normalization and smart interval fallback behavior.
+
+### Changed
+
+- Keepalive scheduling now uses one-shot alarms in smart mode, while preserving the previous fixed periodic interval when smart mode is disabled.
+- Session status handling keeps only minimal safe timing fields and continues to fall back to the manual interval if the read-only status endpoint is unavailable.
+
 ## [1.2.0] - 2026-04-30
 
 ### Added
