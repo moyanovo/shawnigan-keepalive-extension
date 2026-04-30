@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.1] - 2026-04-30
+
+### Fixed
+
+- Let long popup status, diagnostics, tab titles, URLs, and badges wrap so the full text remains visible inside cards.
+- Prevent single-tab manual checks from changing or describing the global smart keepalive schedule.
+- Replace the popup footer author line with the extension copyright notice.
+
 ## [1.3.0] - 2026-04-30
 
 ### Added

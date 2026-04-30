@@ -460,7 +460,9 @@ async function performKeepalive(trigger = 'manual', options = {}) {
         lastDetails: getNoMatchDetails(scope),
         lastTargetUrl: SAFE_KEEPALIVE_URL,
         lastTabStatuses: [],
-        lastSmartIntervalMinutes: initialSettings.intervalMinutes,
+        lastSmartIntervalMinutes: scope === 'all-tabs'
+          ? initialSettings.intervalMinutes
+          : undefined,
         lastErrorAt: null,
       }, {
         syncAlarm: false,
@@ -472,9 +474,10 @@ async function performKeepalive(trigger = 'manual', options = {}) {
     const successCount = pingResults.filter((result) => result.ok).length
     const failureCount = pingResults.length - successCount
     const finishedAt = new Date().toISOString()
-    const smartIntervalMinutes = initialSettings.smartIntervalEnabled
+    const shouldUpdateSmartInterval = scope === 'all-tabs'
+    const smartIntervalMinutes = shouldUpdateSmartInterval && initialSettings.smartIntervalEnabled
       ? getSmartIntervalMinutes(pingResults, initialSettings.intervalMinutes)
-      : initialSettings.intervalMinutes
+      : initialSettings.lastSmartIntervalMinutes
 
     return saveCompletedRun({
       isRunning: false,
@@ -494,12 +497,12 @@ async function performKeepalive(trigger = 'manual', options = {}) {
         scope,
       }),
       lastDetails: buildLastDetails(normalizedTrigger, matchedTabs.length, pingResults, {
-        smartIntervalEnabled: initialSettings.smartIntervalEnabled,
+        smartIntervalEnabled: shouldUpdateSmartInterval && initialSettings.smartIntervalEnabled,
         smartIntervalMinutes,
       }),
       lastTargetUrl: SAFE_KEEPALIVE_URL,
       lastTabStatuses: buildLastTabStatuses(normalizedTrigger, pingResults, finishedAt),
-      lastSmartIntervalMinutes: smartIntervalMinutes,
+      lastSmartIntervalMinutes: shouldUpdateSmartInterval ? smartIntervalMinutes : undefined,
       lastErrorAt: null,
     }, {
       syncAlarm: false,

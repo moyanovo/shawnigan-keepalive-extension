@@ -341,12 +341,12 @@ button:disabled {
 }
 
 .status-grid strong {
-  overflow: hidden;
   color: #f8fbff;
   font-size: 14px;
   font-weight: 760;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .matches-header {
@@ -405,25 +405,20 @@ button:disabled {
   min-width: 0;
 }
 
-.tab-card__title,
-.tab-card__url,
-.match-list strong,
-.match-list span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .tab-card__title {
   color: var(--ink);
   font-size: 13px;
   font-weight: 760;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .tab-card__url,
 .tab-card__meta {
   color: var(--muted);
   font-size: 11px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .tab-card__badge {
@@ -437,6 +432,9 @@ button:disabled {
   color: var(--accent-strong);
   font-size: 10px;
   font-weight: 800;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-align: right;
 }
 
 .tab-card__actions {
