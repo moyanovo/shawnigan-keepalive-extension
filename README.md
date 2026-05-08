@@ -189,7 +189,7 @@ This repository is public for transparency and distribution, but the project rem
 <table>
   <tr>
     <td><strong>用途</strong></td>
-    <td>当你正在使用 Shawnigan 网站时，帮助当前会话不要太快进入空闲状态。</td>
+    <td>当你正在使用 Shawnigan/ShawNet 网站时，防止页面被踢出登录。</td>
   </tr>
   <tr>
     <td><strong>支持页面</strong></td>
@@ -214,7 +214,7 @@ Shawnigan Keepalive 只做一件事：在你已经打开 `shawnigan.myschoolapp.
 <table>
   <tr>
     <td width="50%">
-      <strong>安静的后台检查</strong><br>
+      <strong>静默的后台检查</strong><br>
       保活检查在后台完成，不会强制刷新你正在看的页面。
     </td>
     <td width="50%">
