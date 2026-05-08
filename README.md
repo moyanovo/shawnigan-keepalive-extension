@@ -175,13 +175,13 @@ This repository is public for transparency and distribution, but the project rem
 <h1 align="center">Shawnigan Keepalive Extension</h1>
 
 <p align="center">
-  一个轻量的 Chrome Extension，用来帮助 Shawnigan 页面保持在线，同时避免频繁刷新页面。
+  一个轻量的 Chrome Extension，用来让 Shawnigan 页面更稳地保持在线，不用频繁手动刷新。
 </p>
 
 <p align="center">
   <a href="#english">English</a> · <a href="#中文">中文</a> ·
-  <a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.1">Latest release</a> ·
-  <a href="CHANGELOG.md">Changelog</a>
+  <a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.1">最新版本</a> ·
+  <a href="CHANGELOG.md">更新记录</a>
 </p>
 
 ## 快速了解
@@ -189,7 +189,7 @@ This repository is public for transparency and distribution, but the project rem
 <table>
   <tr>
     <td><strong>用途</strong></td>
-    <td>当你已经在使用 Shawnigan 网站时，帮助当前 session 不要太快进入 idle 状态。</td>
+    <td>当你正在使用 Shawnigan 网站时，帮助当前会话不要太快进入空闲状态。</td>
   </tr>
   <tr>
     <td><strong>支持页面</strong></td>
@@ -205,9 +205,9 @@ This repository is public for transparency and distribution, but the project rem
   </tr>
 </table>
 
-Shawnigan Keepalive 只解决一个很具体的问题：当你已经在 Chrome 里使用 `shawnigan.myschoolapp.com` 时，帮助这些 session 保持在线。它会在后台发送安静的 keepalive 请求，在 popup 里显示检查结果；如果没有打开匹配的 Shawnigan 页面，它就不会做多余的事。
+Shawnigan Keepalive 只做一件事：在你已经打开 `shawnigan.myschoolapp.com` 的时候，帮这些页面维持会话。它会在后台发送一次很轻的保活请求，再把检查结果显示在弹窗里；如果当前没有匹配的 Shawnigan 页面，它就不会额外运行。
 
-它不会自动操作网站，不会绕过登录，也不会收集个人数据。Extension 只会查找匹配的 Shawnigan tabs，执行安全检查，然后清楚地告诉你当前 session 是否正常。
+它不会替你操作网站，不会绕过登录，也不会收集个人数据。这个扩展只会查找匹配的 Shawnigan 标签页，做一次安全检查，然后直接告诉你当前会话看起来是否正常。
 
 ## 亮点
 
@@ -215,21 +215,21 @@ Shawnigan Keepalive 只解决一个很具体的问题：当你已经在 Chrome �
   <tr>
     <td width="50%">
       <strong>安静的后台检查</strong><br>
-      执行 keepalive 检查时，不强制可见页面刷新。
+      保活检查在后台完成，不会强制刷新你正在看的页面。
     </td>
     <td width="50%">
-      <strong>Smart timing</strong><br>
-      读取 session status endpoint，只在 session 接近超时时更频繁检查。
+      <strong>智能检查间隔</strong><br>
+      读取会话状态接口，只在会话快要超时时更频繁地检查。
     </td>
   </tr>
   <tr>
     <td width="50%">
-      <strong>清楚的 popup 控制</strong><br>
-      可以开启/关闭 keepalive、设置固定间隔、检查全部匹配 tabs，或手动检查单个 tab。
+      <strong>清楚的弹窗控制</strong><br>
+      可以开启或关闭保活、设置固定间隔、检查全部匹配页面，也可以只检查单个标签页。
     </td>
     <td width="50%">
-      <strong>有用的 diagnostics</strong><br>
-      显示 Last result、失败 tabs、检查细节和 badge 状态。
+      <strong>看得懂的诊断信息</strong><br>
+      显示上次结果、失败页面、检查细节和图标角标状态，方便判断哪里需要处理。
     </td>
   </tr>
 </table>
@@ -238,9 +238,9 @@ Shawnigan Keepalive 只解决一个很具体的问题：当你已经在 Chrome �
 
 ### 下载打包好的版本
 
-1. 打开 [Releases page](https://github.com/moyanovo/shawnigan-keepalive-extension/releases)。
-2. 下载最新 release 里的 `shawnigan-keepalive-extension-v1.3.1.zip`。
-3. 解压 ZIP 到一个你之后能找到的位置。
+1. 打开 [发布页面](https://github.com/moyanovo/shawnigan-keepalive-extension/releases)。
+2. 下载最新版本里的 `shawnigan-keepalive-extension-v1.3.1.zip`。
+3. 把 ZIP 解压到一个之后能找到的位置。
 
 ### 或者克隆仓库
 
@@ -254,50 +254,50 @@ cd shawnigan-keepalive-extension
 1. 打开 `chrome://extensions`。
 2. 开启 **Developer mode**。
 3. 点击 **Load unpacked**。
-4. 选择解压后的文件夹，或选择克隆下来的 repository 文件夹。
-5. 如果想快速打开 popup，可以把 extension pin 到工具栏。
+4. 选择解压后的文件夹，或者选择克隆下来的仓库文件夹。
+5. 如果你想更快打开弹窗，可以把扩展固定到工具栏。
 
 ## 使用方法
 
 1. 在 Chrome 里打开一个或多个 Shawnigan 页面。
-2. 点击 extension icon。
-3. 打开 keepalive 开关。
-4. 设置固定检查间隔，或者保持 Smart mode 开启。
+2. 点击扩展图标。
+3. 打开保活开关。
+4. 设置固定检查间隔，或者保持智能模式开启。
 5. 需要立即检查时，点击 **Run now**。
-6. 只想检查某个页面时，用 **Run tab**；想切换到对应页面时，用 **Jump to tab**。
-7. 如果出现问题，可以查看 **Last result**、**Last check** 和 **Last details**。
+6. 只想检查某个页面时，点击 **Run tab**；想切换到对应页面时，点击 **Jump to tab**。
+7. 如果有问题，可以查看 **Last result**、**Last check** 和 **Last details**。
 
 ## 权限说明
 
 | 权限 | 用途 |
 | --- | --- |
-| `alarms` | 定时执行 keepalive 检查。 |
-| `scripting` | 在匹配的 Shawnigan 页面里执行 keepalive 请求。 |
-| `storage` | 保存设置和 last-run diagnostics。 |
-| `tabs` | 查找匹配的 Shawnigan tabs，并更新 badge。 |
-| `https://shawnigan.myschoolapp.com/*` | 将 extension 限制在 Shawnigan 页面范围内。 |
+| `alarms` | 定时执行保活检查。 |
+| `scripting` | 在匹配的 Shawnigan 页面里执行保活请求。 |
+| `storage` | 保存设置和上次检查的诊断信息。 |
+| `tabs` | 查找匹配的 Shawnigan 标签页，并更新图标角标。 |
+| `https://shawnigan.myschoolapp.com/*` | 把扩展的作用范围限制在 Shawnigan 页面。 |
 
 ## 项目结构
 
 ```text
 .
-├── background.js              # Manifest V3 service worker
-├── lib/keepalive-core.mjs     # 共享的 normalization 和 status helpers
-├── popup.html                 # popup markup
-├── popup.css                  # popup styling
-├── popup.js                   # popup behavior
-├── manifest.json              # Chrome extension manifest
-├── icons/                     # extension icon assets
-├── tests/                     # shared helpers 的 Node 测试
-├── CHANGELOG.md               # release history
-├── CONTRIBUTING.md            # contribution notes
-├── LICENSE                    # proprietary license terms
-└── NOTICE                     # copyright 和 attribution notice
+├── background.js              # Manifest V3 后台 service worker
+├── lib/keepalive-core.mjs     # 共享的状态处理和数据整理逻辑
+├── popup.html                 # 弹窗结构
+├── popup.css                  # 弹窗样式
+├── popup.js                   # 弹窗交互逻辑
+├── manifest.json              # Chrome Extension 配置文件
+├── icons/                     # 扩展图标资源
+├── tests/                     # 共享逻辑的 Node 测试
+├── CHANGELOG.md               # 更新记录
+├── CONTRIBUTING.md            # 贡献说明
+├── LICENSE                    # 专有许可条款
+└── NOTICE                     # 版权和署名说明
 ```
 
 ## 开发检查
 
-修改源码后，需要在 `chrome://extensions` 里 reload extension。如果 reload 时 popup 正开着，关掉再重新打开。
+修改源码后，需要在 `chrome://extensions` 里重新加载扩展。如果重新加载时弹窗正开着，关掉后再重新打开。
 
 打包或发布前，建议运行这些轻量检查：
 
@@ -311,14 +311,14 @@ git diff --check
 
 ## 免责声明
 
-> 本项目是独立项目，与 Shawnigan Lake School 无任何隶属、授权、赞助、背书或维护关系。
+> 本项目是独立项目，与 Shawnigan Lake School 没有隶属、授权、赞助、背书或维护关系。
 >
-> 本项目使用的 icon 和 logo 资产属于 Shawnigan Lake School 的 icon/logo materials，仅用于识别本 extension 所支持的 school-related pages。我没有对这些资产进行修改，也没有将其用于商业用途。所有 trademarks、logos、names 以及相关 brand materials 均归其各自权利人所有。
+> 本项目使用的 icon 和 logo 资产属于 Shawnigan Lake School，仅用于识别本扩展所支持的相关页面。我没有修改这些资产，也没有将其用于商业用途。所有商标、logo、名称和相关品牌材料均归各自权利人所有。
 >
-> 如果 Shawnigan Lake School 或授权权利人要求替换或移除相关 icon/logo 资产，我会从本项目中替换或移除它们。
+> 如果 Shawnigan Lake School 或授权权利人要求替换或移除相关 icon/logo 资产，我会从本项目中替换或移除。
 
 ## 版权
 
 Copyright (c) 2026 Sam, Moyan Huang. All rights reserved.
 
-本仓库公开是为了透明展示和分发项目，但项目本身仍然是 proprietary。未经 Sam, Moyan Huang 事先书面许可，不得移除、修改或替换作者署名、copyright notices、project name 或 repository notices。
+本仓库公开是为了透明展示和分发项目，但项目本身仍为专有项目。未经 Sam, Moyan Huang 事先书面许可，不得移除、修改或替换作者署名、版权声明、项目名称或仓库声明。
