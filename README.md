@@ -1,39 +1,79 @@
-# Shawnigan Keepalive Extension
+<a id="english"></a>
 
-**English** · [中文](#中文)
+<p align="center">
+  <img src="icons/icon128.png" width="96" height="96" alt="Shawnigan Keepalive icon">
+</p>
 
-A small Chrome extension that keeps Shawnigan tabs from going idle. It sends a quiet keepalive request in the background, shows what happened in the popup, and stays out of the way when there are no matching Shawnigan pages open.
+<h1 align="center">Shawnigan Keepalive Extension</h1>
 
-Author: Sam, Moyan Huang
+<p align="center">
+  A small Chrome extension that helps Shawnigan tabs stay active without noisy page reloads.
+</p>
 
-Repository: [moyanovo/shawnigan-keepalive-extension](https://github.com/moyanovo/shawnigan-keepalive-extension)
+<p align="center">
+  <a href="#english">English</a> · <a href="#中文">中文</a> ·
+  <a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.1">Latest release</a> ·
+  <a href="CHANGELOG.md">Changelog</a>
+</p>
 
-Current stable release: [`v1.3.1`](https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.1)
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/version-v1.3.1-2563eb?style=flat-square">
+  <img alt="Chrome Manifest V3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-16a34a?style=flat-square">
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ES%20Modules-f7df1e?style=flat-square&labelColor=111827&color=facc15">
+  <img alt="License" src="https://img.shields.io/badge/license-proprietary-64748b?style=flat-square">
+</p>
 
 ---
 
-## What it does
+## At a glance
 
-Shawnigan Keepalive is built for one narrow job: help keep `shawnigan.myschoolapp.com` sessions alive while you are already using them in Chrome.
+<table>
+  <tr>
+    <td><strong>Purpose</strong></td>
+    <td>Keeps active Shawnigan sessions from going idle while you are already using the site.</td>
+  </tr>
+  <tr>
+    <td><strong>Target page</strong></td>
+    <td><code>https://shawnigan.myschoolapp.com/*</code></td>
+  </tr>
+  <tr>
+    <td><strong>Current release</strong></td>
+    <td><a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.1"><code>v1.3.1</code></a></td>
+  </tr>
+  <tr>
+    <td><strong>Author</strong></td>
+    <td>Sam, Moyan Huang</td>
+  </tr>
+</table>
 
-It does not try to automate the site, bypass login, or collect personal data. The extension looks for matching Shawnigan tabs, runs a safe keepalive check, and reports the result clearly so you can see whether the session is still healthy.
+Shawnigan Keepalive is built for one narrow job: help keep `shawnigan.myschoolapp.com` sessions alive in Chrome. It sends a quiet keepalive request in the background, shows the result in the popup, and stays out of the way when there are no matching Shawnigan pages open.
 
-## Features
+It does not try to automate the site, bypass login, or collect personal data. The extension looks for matching Shawnigan tabs, runs a safe check, and tells you plainly whether the session still looks healthy.
 
-- On/off switch for the keepalive worker.
-- Fixed interval mode from 1 to 120 minutes.
-- Smart mode that reads the session status endpoint and checks more often only when the session is close to timing out.
-- Manual **Run now** action for all matched tabs.
-- Per-tab **Run tab** and **Jump to tab** actions from the popup.
-- Live matched-tab count and extension badge state.
-- Last-run diagnostics, including failed tabs and check details.
-- Lightweight Manifest V3 background service worker.
+## Highlights
 
-## Supported page
-
-```text
-https://shawnigan.myschoolapp.com/*
-```
+<table>
+  <tr>
+    <td width="50%">
+      <strong>Quiet background checks</strong><br>
+      Runs keepalive checks without forcing visible page reloads.
+    </td>
+    <td width="50%">
+      <strong>Smart timing</strong><br>
+      Reads the session status endpoint and checks more often only when the session is close to timing out.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>Clear popup controls</strong><br>
+      Toggle keepalive, set a fixed interval, run all matched tabs, or test one tab manually.
+    </td>
+    <td width="50%">
+      <strong>Useful diagnostics</strong><br>
+      Shows the last result, failed tabs, check details, and badge state.
+    </td>
+  </tr>
+</table>
 
 ## Install
 
@@ -70,8 +110,6 @@ cd shawnigan-keepalive-extension
 
 ## Permissions
 
-The extension asks for only the permissions it needs:
-
 | Permission | Why it is needed |
 | --- | --- |
 | `alarms` | Schedules keepalive runs. |
@@ -98,11 +136,11 @@ The extension asks for only the permissions it needs:
 └── NOTICE                     # Copyright and attribution notice
 ```
 
-## Development
+## Development checks
 
 After editing the source, reload the extension from `chrome://extensions`. If the popup is open during reload, close and reopen it.
 
-Run the lightweight checks before packaging or publishing:
+Run these checks before packaging or publishing:
 
 ```bash
 node --test tests/keepalive-core.test.mjs
@@ -114,11 +152,11 @@ git diff --check
 
 ## Disclaimer
 
-This project is independent and is not affiliated with, endorsed by, sponsored by, or maintained by Shawnigan Lake School.
-
-The icon and logo assets used by this project are Shawnigan Lake School icon/logo materials. They are included only for identification and compatibility with the school-related pages this extension supports. I have not modified those assets, and I do not use them commercially. All trademarks, logos, names, and related brand materials remain the property of their respective owners.
-
-If Shawnigan Lake School or an authorized rights holder asks for the icon/logo assets to be changed or removed, I will replace or remove them from this project.
+> This project is independent and is not affiliated with, endorsed by, sponsored by, or maintained by Shawnigan Lake School.
+>
+> The icon and logo assets used by this project are Shawnigan Lake School icon/logo materials. They are included only for identification and compatibility with the school-related pages this extension supports. I have not modified those assets, and I do not use them commercially. All trademarks, logos, names, and related brand materials remain the property of their respective owners.
+>
+> If Shawnigan Lake School or an authorized rights holder asks for the icon/logo assets to be changed or removed, I will replace or remove them from this project.
 
 ## Copyright
 
@@ -128,40 +166,73 @@ This repository is public for transparency and distribution, but the project rem
 
 ---
 
-# 中文
+<a id="中文"></a>
 
-[English](#shawnigan-keepalive-extension) · **中文**
+<p align="center">
+  <img src="icons/icon128.png" width="96" height="96" alt="Shawnigan Keepalive icon">
+</p>
 
-一个轻量的 Chrome Extension，用来帮助 Shawnigan 页面保持在线。它会在后台发送安静的 keepalive 请求，在 popup 里显示检查结果；如果没有打开匹配的 Shawnigan 页面，它就不会做多余的事。
+<h1 align="center">Shawnigan Keepalive Extension</h1>
 
-作者：Sam, Moyan Huang
+<p align="center">
+  一个轻量的 Chrome Extension，用来帮助 Shawnigan 页面保持在线，同时避免频繁刷新页面。
+</p>
 
-仓库：[moyanovo/shawnigan-keepalive-extension](https://github.com/moyanovo/shawnigan-keepalive-extension)
+<p align="center">
+  <a href="#english">English</a> · <a href="#中文">中文</a> ·
+  <a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.1">Latest release</a> ·
+  <a href="CHANGELOG.md">Changelog</a>
+</p>
 
-当前稳定版本：[`v1.3.1`](https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.1)
+## 快速了解
 
-## 它是做什么的
+<table>
+  <tr>
+    <td><strong>用途</strong></td>
+    <td>当你已经在使用 Shawnigan 网站时，帮助当前 session 不要太快进入 idle 状态。</td>
+  </tr>
+  <tr>
+    <td><strong>支持页面</strong></td>
+    <td><code>https://shawnigan.myschoolapp.com/*</code></td>
+  </tr>
+  <tr>
+    <td><strong>当前版本</strong></td>
+    <td><a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.1"><code>v1.3.1</code></a></td>
+  </tr>
+  <tr>
+    <td><strong>作者</strong></td>
+    <td>Sam, Moyan Huang</td>
+  </tr>
+</table>
 
-Shawnigan Keepalive 只解决一个很具体的问题：当你已经在 Chrome 里使用 `shawnigan.myschoolapp.com` 时，帮助这些 session 不要太快进入 idle 状态。
+Shawnigan Keepalive 只解决一个很具体的问题：当你已经在 Chrome 里使用 `shawnigan.myschoolapp.com` 时，帮助这些 session 保持在线。它会在后台发送安静的 keepalive 请求，在 popup 里显示检查结果；如果没有打开匹配的 Shawnigan 页面，它就不会做多余的事。
 
-它不会自动操作网站，不会绕过登录，也不会收集个人数据。Extension 只会查找匹配的 Shawnigan tabs，执行安全的 keepalive 检查，然后把结果清楚地显示出来，让你知道当前 session 是否正常。
+它不会自动操作网站，不会绕过登录，也不会收集个人数据。Extension 只会查找匹配的 Shawnigan tabs，执行安全检查，然后清楚地告诉你当前 session 是否正常。
 
-## 功能
+## 亮点
 
-- keepalive worker 开关。
-- 固定间隔模式，支持 1 到 120 分钟。
-- Smart mode：读取 session status endpoint，在 session 接近超时时才更频繁检查。
-- 对所有匹配 tabs 执行的 **Run now** 手动检查。
-- 针对单个 tab 的 **Run tab** 和 **Jump to tab** 操作。
-- 实时显示匹配 tab 数量和 extension badge 状态。
-- Last-run diagnostics，包括失败 tab 和检查细节。
-- 轻量的 Manifest V3 background service worker。
-
-## 支持的页面
-
-```text
-https://shawnigan.myschoolapp.com/*
-```
+<table>
+  <tr>
+    <td width="50%">
+      <strong>安静的后台检查</strong><br>
+      执行 keepalive 检查时，不强制可见页面刷新。
+    </td>
+    <td width="50%">
+      <strong>Smart timing</strong><br>
+      读取 session status endpoint，只在 session 接近超时时更频繁检查。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>清楚的 popup 控制</strong><br>
+      可以开启/关闭 keepalive、设置固定间隔、检查全部匹配 tabs，或手动检查单个 tab。
+    </td>
+    <td width="50%">
+      <strong>有用的 diagnostics</strong><br>
+      显示 Last result、失败 tabs、检查细节和 badge 状态。
+    </td>
+  </tr>
+</table>
 
 ## 安装
 
@@ -198,8 +269,6 @@ cd shawnigan-keepalive-extension
 
 ## 权限说明
 
-Extension 只申请必要权限：
-
 | 权限 | 用途 |
 | --- | --- |
 | `alarms` | 定时执行 keepalive 检查。 |
@@ -226,7 +295,7 @@ Extension 只申请必要权限：
 └── NOTICE                     # copyright 和 attribution notice
 ```
 
-## 开发
+## 开发检查
 
 修改源码后，需要在 `chrome://extensions` 里 reload extension。如果 reload 时 popup 正开着，关掉再重新打开。
 
@@ -242,11 +311,11 @@ git diff --check
 
 ## 免责声明
 
-本项目是独立项目，与 Shawnigan Lake School 无任何隶属、授权、赞助、背书或维护关系。
-
-本项目使用的 icon 和 logo 资产属于 Shawnigan Lake School 的 icon/logo materials，仅用于识别本 extension 所支持的 school-related pages。我没有对这些资产进行修改，也没有将其用于商业用途。所有 trademarks、logos、names 以及相关 brand materials 均归其各自权利人所有。
-
-如果 Shawnigan Lake School 或授权权利人要求替换或移除相关 icon/logo 资产，我会从本项目中替换或移除它们。
+> 本项目是独立项目，与 Shawnigan Lake School 无任何隶属、授权、赞助、背书或维护关系。
+>
+> 本项目使用的 icon 和 logo 资产属于 Shawnigan Lake School 的 icon/logo materials，仅用于识别本 extension 所支持的 school-related pages。我没有对这些资产进行修改，也没有将其用于商业用途。所有 trademarks、logos、names 以及相关 brand materials 均归其各自权利人所有。
+>
+> 如果 Shawnigan Lake School 或授权权利人要求替换或移除相关 icon/logo 资产，我会从本项目中替换或移除它们。
 
 ## 版权
 

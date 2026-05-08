@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Reworked the README into a cleaner bilingual English/Chinese project page.
+- Polished the GitHub README layout with a centered hero, badges, summary tables, feature cards, and quoted disclaimers.
 - Clarified the project's independent status and added icon/logo attribution language.
 - Updated the manifest description to avoid implying official affiliation.
 
