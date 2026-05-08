@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- Reworked the README into a cleaner bilingual English/Chinese project page.
+- Clarified the project's independent status and added icon/logo attribution language.
+- Updated the manifest description to avoid implying official affiliation.
+
 ## [1.3.1] - 2026-04-30
 
 ### Fixed
