@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.3.2] - 2026-05-24
+
+### Fixed
+
+- Await `chrome.alarms.create(...)` in `syncAlarm()` so alarm creation failures stay inside the async flow and scheduling calls cannot race a pending create operation.
 
 ### Changed
 

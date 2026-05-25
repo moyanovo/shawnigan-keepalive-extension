@@ -152,7 +152,7 @@ async function syncAlarm(settings) {
     alarmOptions.periodInMinutes = settings.intervalMinutes
   }
 
-  chrome.alarms.create(ALARM_NAME, alarmOptions)
+  await chrome.alarms.create(ALARM_NAME, alarmOptions)
 }
 
 async function findMatchingTabs() {
