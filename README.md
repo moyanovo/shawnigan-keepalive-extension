@@ -20,7 +20,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-v1.3.2-2563eb?style=flat-square">
   <img alt="Chrome Manifest V3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-16a34a?style=flat-square">
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ES%20Modules-f7df1e?style=flat-square&labelColor=111827&color=facc15">
-  <img alt="License" src="https://img.shields.io/badge/license-proprietary-64748b?style=flat-square">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-64748b?style=flat-square">
 </p>
 
 ---
@@ -132,7 +132,7 @@ cd shawnigan-keepalive-extension
 ├── tests/                     # Node test coverage for shared helpers
 ├── CHANGELOG.md               # Release history
 ├── CONTRIBUTING.md            # Contribution notes
-├── LICENSE                    # Proprietary license terms
+├── LICENSE                    # MIT license terms
 └── NOTICE                     # Copyright and attribution notice
 ```
 
@@ -160,9 +160,9 @@ git diff --check
 
 ## Copyright
 
-Copyright (c) 2026 Sam, Moyan Huang. All rights reserved.
+Copyright (c) 2026 Sam, Moyan Huang.
 
-This repository is public for transparency and distribution, but the project remains proprietary. Author attribution, copyright notices, the project name, and repository notices may not be removed, altered, or replaced without prior written permission from Sam, Moyan Huang.
+This project is released under the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 
@@ -319,6 +319,6 @@ git diff --check
 
 ## 版权
 
-Copyright (c) 2026 Sam, Moyan Huang. All rights reserved.
+Copyright (c) 2026 Sam, Moyan Huang.
 
-本仓库公开是为了透明展示和分发项目，但项目本身仍为专有项目。未经 Sam, Moyan Huang 事先书面许可，不得移除、修改或替换作者署名、版权声明、项目名称或仓库声明。
+本项目基于 MIT License 开源。详情请见 [LICENSE](LICENSE)。

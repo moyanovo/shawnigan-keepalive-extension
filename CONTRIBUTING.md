@@ -2,9 +2,9 @@
 
 Thanks for your interest in Shawnigan Keepalive.
 
-This repository is public for transparency and distribution, but the project
-itself remains proprietary. Before proposing code changes, please open an issue
-first so scope, ownership, and licensing expectations can be discussed.
+This project is released under the MIT License. Before proposing code changes,
+please open an issue first so scope and maintenance expectations can be
+discussed.
 
 ## Ways to help
 
@@ -24,6 +24,5 @@ first so scope, ownership, and licensing expectations can be discussed.
 Please do not open large unsolicited pull requests. Start with an issue or a
 small proposed change first.
 
-Any accepted contribution must preserve existing author attribution, copyright
-notices, project branding, and repository notices unless explicitly approved by
-Sam, Moyan Huang in writing.
+Accepted contributions are licensed under the MIT License and should preserve
+relevant copyright and attribution notices.
