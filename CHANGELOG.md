@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2026-07-09
+
+### Changed
+
+- Rebuilt the popup as a light macOS-inspired glass control surface with clearer status, compact metrics, and collapsible diagnostics.
+- Replaced the numeric interval field with Smart, 5, 15, and 30 minute controls while keeping existing fixed custom intervals visible.
+- Serialized popup commands so rapid interactions cannot leave stale status visible.
+
 ## [1.3.2] - 2026-05-24
 
 ### Fixed

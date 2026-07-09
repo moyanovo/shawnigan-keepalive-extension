@@ -12,12 +12,12 @@
 
 <p align="center">
   <a href="#english">English</a> · <a href="#中文">中文</a> ·
-  <a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.2">Latest release</a> ·
+  <a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.4.0">Latest release</a> ·
   <a href="CHANGELOG.md">Changelog</a>
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-v1.3.2-2563eb?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/version-v1.4.0-2563eb?style=flat-square">
   <img alt="Chrome Manifest V3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-16a34a?style=flat-square">
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ES%20Modules-f7df1e?style=flat-square&labelColor=111827&color=facc15">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-64748b?style=flat-square">
@@ -38,7 +38,7 @@
   </tr>
   <tr>
     <td><strong>Current release</strong></td>
-    <td><a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.2"><code>v1.3.2</code></a></td>
+    <td><a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.4.0"><code>v1.4.0</code></a></td>
   </tr>
   <tr>
     <td><strong>Author</strong></td>
@@ -80,7 +80,7 @@ It does not try to automate the site, bypass login, or collect personal data. Th
 ### Download the packaged release
 
 1. Open the [Releases page](https://github.com/moyanovo/shawnigan-keepalive-extension/releases).
-2. Download `shawnigan-keepalive-extension-v1.3.2.zip` from the latest release.
+2. Download `shawnigan-keepalive-extension-v1.4.0.zip` from the latest release.
 3. Extract the ZIP somewhere you can find it again.
 
 ### Or clone the repository
@@ -180,7 +180,7 @@ This project is released under the MIT License. See [LICENSE](LICENSE) for detai
 
 <p align="center">
   <a href="#english">English</a> · <a href="#中文">中文</a> ·
-  <a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.2">最新版本</a> ·
+  <a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.4.0">最新版本</a> ·
   <a href="CHANGELOG.md">更新记录</a>
 </p>
 
@@ -197,7 +197,7 @@ This project is released under the MIT License. See [LICENSE](LICENSE) for detai
   </tr>
   <tr>
     <td><strong>当前版本</strong></td>
-    <td><a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.3.2"><code>v1.3.2</code></a></td>
+    <td><a href="https://github.com/moyanovo/shawnigan-keepalive-extension/releases/tag/v1.4.0"><code>v1.4.0</code></a></td>
   </tr>
   <tr>
     <td><strong>作者</strong></td>
@@ -239,7 +239,7 @@ Shawnigan Keepalive 只做一件事：在你已经打开 `shawnigan.myschoolapp.
 ### 下载打包好的版本
 
 1. 打开 [发布页面](https://github.com/moyanovo/shawnigan-keepalive-extension/releases)。
-2. 下载最新版本里的 `shawnigan-keepalive-extension-v1.3.2.zip`。
+2. 下载最新版本里的 `shawnigan-keepalive-extension-v1.4.0.zip`。
 3. 把 ZIP 解压到一个之后能找到的位置。
 
 ### 或者克隆仓库
