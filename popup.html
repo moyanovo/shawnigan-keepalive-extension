@@ -4,83 +4,69 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Sam Huang">
-    <title>Shawnigan Keepalive by Sam Huang</title>
+    <title>Shawnigan Keepalive</title>
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
     <main class="panel" aria-busy="false">
       <p id="screenReaderStatus" class="sr-only" aria-live="polite" aria-atomic="true"></p>
-      <section class="hero">
-        <div>
-          <p id="heroStatusBadge" class="hero-status">Loading</p>
-          <p class="author-note">Author: Sam Huang</p>
-          <h1>Keepalive active</h1>
-          <p id="heroSummary" class="hero-summary">Checking matched Shawnigan pages</p>
+
+      <section class="hero" data-tone="neutral">
+        <div class="hero-copy">
+          <p id="heroStatusBadge" class="status-pill">Loading</p>
+          <h1>Session keeper</h1>
+          <p id="heroSummary">Checking your Shawnigan pages</p>
         </div>
         <label class="switch">
-          <input id="enabled" class="switch-input" type="checkbox" aria-label="Enable or disable keepalive">
+          <span class="sr-only">Enable keepalive</span>
+          <input id="enabled" type="checkbox" aria-label="Enable or disable keepalive">
           <span class="slider"></span>
         </label>
       </section>
 
-      <section class="controls">
-        <label class="field">
-          <span>Refresh every</span>
-          <div class="interval-row">
-            <input id="interval" type="number" min="1" max="120" step="1">
-            <span>min</span>
-          </div>
-        </label>
-        <label class="field smart-field">
-          <span>Smart mode</span>
-          <span class="smart-row">
-            <input id="smartInterval" type="checkbox">
-            <span>Read session status</span>
-          </span>
-        </label>
-        <button id="runNow" type="button">Run now</button>
+      <section class="command-card" aria-label="Keepalive controls">
+        <div class="command-heading">
+          <span>Keep alive</span>
+          <span id="intervalCustomHint" class="custom-hint" hidden></span>
+        </div>
+        <div id="intervalControl" class="segmented-control" role="group" aria-label="Keepalive interval">
+          <button type="button" data-interval="smart">Smart</button>
+          <button type="button" data-interval="5">5 min</button>
+          <button type="button" data-interval="15">15 min</button>
+          <button type="button" data-interval="30">30 min</button>
+        </div>
+        <button id="runNow" class="primary-action" type="button">Run now</button>
       </section>
 
-      <section class="status-grid">
-        <article>
-          <span class="label">State</span>
-          <strong id="stateText">-</strong>
-        </article>
-        <article>
-          <span class="label">Matches</span>
+      <section class="metrics" aria-label="Keepalive overview">
+        <article class="metric">
+          <span class="metric-label">Pages</span>
           <strong id="matchCount">0</strong>
         </article>
-        <article class="wide">
-          <span class="label">Last run</span>
+        <article class="metric">
+          <span class="metric-label">Last run</span>
           <strong id="lastRun">Never</strong>
         </article>
-        <article class="wide">
-          <span class="label">Last result</span>
+        <article class="metric metric-result">
+          <span class="metric-label">Result</span>
           <strong id="lastResult">Idle</strong>
         </article>
-        <article class="wide">
-          <span class="label">Last check</span>
-          <strong id="lastStats">No checks yet</strong>
-        </article>
       </section>
 
-      <section class="details">
-        <div class="matches-header">
-          <span>Last details</span>
-        </div>
+      <p id="lastStats" class="activity-line">No checks yet</p>
+
+      <details class="disclosure">
+        <summary>Last details</summary>
         <ul id="detailsList" class="detail-list"></ul>
-      </section>
+      </details>
 
-      <section class="matches">
-        <div class="matches-header">
-          <span>Matched pages</span>
-          <span id="matchHint">0 pages</span>
-        </div>
+      <details class="disclosure">
+        <summary>Matched pages <span id="matchHint">0 pages</span></summary>
         <ul id="matchList" class="match-list"></ul>
-      </section>
+      </details>
 
-      <p class="footer-note">© 2026 Sam, Moyan Huang. All rights reserved.</p>
+      <p class="footer-note">Shawnigan Keepalive · v1.4.0</p>
     </main>
-    <script src="popup.js"></script>
+    <script type="module" src="popup.js"></script>
   </body>
 </html>
