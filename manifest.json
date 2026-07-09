@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Shawnigan Keepalive by Sam, Moyan Huang",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Independent MIT-licensed keepalive helper for Shawnigan tabs.",
   "homepage_url": "https://github.com/moyanovo/shawnigan-keepalive-extension",
   "icons": {
